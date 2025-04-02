@@ -14,7 +14,7 @@ MAIN_MENU() {
       echo -e "Welcome to My Salon, how can I help you?\n"
     fi
     #query the db for the list of services and their ID
-    SERVICES=$($PSQL "SELECT * FROM services;")
+    SERVICES=$($PSQL "SELECT * FROM services ORDER BY service_id;")
     #read the results of the query and format them
     echo "$SERVICES" | while read SERVICE_ID BAR SERVICE_NAME
     do
@@ -27,14 +27,14 @@ MAIN_MENU() {
     #redirect the user according to his inputed choice
     case $SERVICE_ID_SELECTED in
       #valid choices
-      1 | 2 | 3 | 4) APPOINTEMENT_MENU ;;
+      1 | 2 | 3 | 4) APPOINTMENT_MENU ;;
       #recall the func if the input is not a valid number with a second arg
       *) MAIN_MENU "I could not find that service. What would you like today?" ;;
     esac
   done
 }
 
-APPOINTEMENT_MENU() {
+APPOINTMENT_MENU() {
   #ask for phone number
   echo -e "\nWhat's your phone number?"
   #wait for user input
